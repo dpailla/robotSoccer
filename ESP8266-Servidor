@@ -1,0 +1,107 @@
+#include <WiFi.h>
+
+#define DXL_BUS_SERIAL1 1  //Dynamixel on Serial1(USART1)  <-OpenCM9.04
+#define DXL_BUS_SERIAL2 2  //Dynamixel on Serial2(USART2)  <-LN101,BT210
+#define DXL_BUS_SERIAL3 3  //Dynamixel on Serial3(USART3)  <-OpenCM 485EXP
+/* Dynamixel ID defines */
+#define ID_NUM1 1
+#define ID_NUM2 2
+#define CCW_Angle_Limit 8
+#define GOAL_SPEED 32
+#define ID_ROBOT 2
+
+
+//Configuración de red
+const char* ssid     = "CIDIS";
+const char* password = "labCid1$";
+
+WiFiServer TCPServer(8266//¿PORT?); //Servidor del ESP32
+WiFiClient TCPClient; //Cliente TCP (PC)
+
+Dynamixel Dxl(DXL_BUS_SERIAL1);
+int data[6];
+int velLeft = 0;
+int velRight = 0;
+
+//Funcion para procesar pack
+void ValProcces(int data[]){
+  
+  int Pos = ((5-(2*ID_ROBOT)));
+  velLeft = (int(data[Pos])-100)*1023/100;
+  velRight = (int(data[Pos+1])-100)*1023/100;
+  
+  if (velLeft <0){
+  velLeft = abs(velLeft)|0x400;
+   }
+  
+  if (velRight>0){
+    velRight = velRight|0x400;
+  }
+  else
+  {
+    velRight = abs(velRight);
+  }
+   
+ 
+
+  //Serial.write(velLeft);
+  //print(velLeft)  
+}
+
+void setup() {
+
+  //Serial3 Serial initialize
+  Dxl.begin(3);
+  //AX MX RX Series
+  Dxl.writeWord(ID_NUM1, CCW_Angle_Limit, 0); 
+  Dxl.writeWord(ID_NUM2, CCW_Angle_Limit, 0); 
+  SerialUSB.begin() //¿Se sigue usando SerialUSB?
+  
+  Serial.begin(115200);
+
+  Serial.printf("Conectando a: %s\n", ssid);
+ 
+  WiFi.begin(ssid, password);
+  
+  // Intentamos que se conecte a la red wifi
+  while(WiFi.status() != WL_CONNECTED) {
+    Serial.println("Conectando...");
+    delay(2000);
+    }
+  
+  Serial.print("Conectado.  ");
+  Serial.print(" Dirección IP del módulo: ");
+  Serial.println(WiFi.localIP());
+
+ TCPServer.begin();
+      
+
+}
+
+void loop() {
+
+   /*if (Serial.available() > 0)
+       byteReceived(Serial.read());*/
+
+    if (!TCPClient.connected()) {
+        // try to connect to a new client
+        TCPClient = TCPServer.available();
+    } else {
+        // read data from the connected client
+        if (TCPClient.available() > 0) {
+            byteReceived(TCPClient.read());
+            
+        }
+    }
+  // when you typed any character in terminal
+  while (SerialUSB.available() < 6);    // wait until a full packet has been buffered (infinite loop risk alert)
+  for (int i = 0; i < 6; i++){
+      data[i] = SerialUSB.read();
+      
+      SerialUSB.write(data[i]);
+      }
+  
+  ValProcces(data);
+  Dxl.writeWord(ID_NUM1, GOAL_SPEED, velLeft); 
+  Dxl.writeWord(ID_NUM2, GOAL_SPEED, velRight); 
+}﻿
