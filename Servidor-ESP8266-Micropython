@@ -1,0 +1,13 @@
+addr = socket.getaddrinfo('0.0.0.0', 80)[0][-1]
+s = socket.socket()
+s.bind(addr)
+s.listen(1)
+log('listening on'+str( addr))
+cl, addr = s.accept()
+print("Client address:", addr)
+print("Client socket:", cl)
+print("Request:")
+req = cl.recv(1024)
+print("size of request: " + str(len(req)))
+print(req)
+cl.close()
