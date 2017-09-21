@@ -1,0 +1,18 @@
+import network
+import socket
+# enable station interface and connect to WiFi access point
+nic = network.WLAN(network.STA_IF)
+nic.active(True)
+nic.connect('NETGEAR', '')
+nic.ifconfig(('192.168.1.44', '255.255.255.0', '192.168.1.1', '192.168.1.1'))
+# now use sockets as usual
+s = socket.socket() 
+s.bind(("",123))
+s.listen(1) 
+cl, addr = s.accept()
+while True:   
+    req = cl.recv(1024)
+    if not req:
+        break
+    print(req)
+cl.close()
