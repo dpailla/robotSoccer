@@ -1,3 +1,9 @@
+/*
+* Codigo del robot
+* ID_ROBOT: ID del robot
+* DATA_INDEX: indice donde empiezan los datos del robot
+* DATA_SIZE: tamaño de la trama
+*/
 #include <DynamixelSerial1.h>
 
 
