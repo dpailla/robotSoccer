@@ -1,5 +1,5 @@
 /*
- * 2017/09/27: Programa ejemplo de comunicacion con Python
+ * 2017/09/27: Programa ejemplo de comunicacion con Python listo
  */
 int inData[5];
 int index=-1;
