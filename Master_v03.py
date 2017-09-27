@@ -1,6 +1,15 @@
+#2017/09/27:  Trama de datos 8 bytes
+# Byte[0]: 240 o 0xF0
+# Byte[1]: Robot1 Motor Left
+# Byte[2]: Robot1 Motor Right
+# Byte[3]: Robot2 Motor Left
+# Byte[4]: Robot2 Motor Right
+# Byte[5]: Robot3 Motor Left
+# Byte[6]: Robot3 Motor Right
+# Byte[7]: 247 o 0xF7
+
 #2017/08/17 DP: envio de datos por puerto serial
 # empaquetamiento de datos
-#ToDo: Definir formato de trama de datos
 # Verificar funcionamiento de 2 o mas joysticks
 # Ojo verificar uso de sys.stdout.flush() luego de los prints para liberar buffers
 

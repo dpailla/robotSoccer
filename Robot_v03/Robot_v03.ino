@@ -13,7 +13,7 @@
 #define MOTOR_RIGHT 2
 #define ID_ROBOT 1
 #define DATA_INDEX 1
-#define DATA_SIZE 5
+#define DATA_SIZE 8
 
 
 int inData[DATA_SIZE];
@@ -35,15 +35,13 @@ void setup(){
   Dynamixel.setEndless(MOTOR_LEFT,ON);
   Dynamixel.setEndless(MOTOR_RIGHT,ON);
 
-  parpadearLed(10);
-  parpadearMotores(10);
+  //parpadearLed(10);
+  //parpadearMotores(10);
   
   
 }
 
 void loop(){
-  Serial.write(158);
-
   while (Serial.available()) {   
      int iByte = Serial.read();
   
@@ -69,8 +67,8 @@ void loop(){
 
 //Funcion para procesar pack
 void ValProcces(int data[]){
-  velLeft = (data[DATA_INDEX]-100)*10.23;
-  velRight = (data[DATA_INDEX+1]-100)*10.23;
+  velLeft = (data[DATA_INDEX]-100)*10;
+  velRight = (data[DATA_INDEX+1]-100)*10;
   if (velLeft > 0){
     dirLeft = RIGTH;
    }
