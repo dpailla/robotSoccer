@@ -3,6 +3,8 @@
 * ID_ROBOT: ID del robot
 * DATA_INDEX: indice donde empiezan los datos del robot
 * DATA_SIZE: tamaño de la trama
+* funciones creadas: parpadearMotores, parpadearLed
+* 
 */
 #include <DynamixelSerial1.h>
 
