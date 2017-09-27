@@ -4,16 +4,18 @@
 # Verificar funcionamiento de 2 o mas joysticks
 # Ojo verificar uso de sys.stdout.flush() luego de los prints para liberar buffers
 
-
+import time
 import pygame
 import serial
 import struct
 import sys
 
+#Inicializo la trama con cabecera 240 y fin 240, los demas datos corresponden a la velocidad 0 de los motores
+dataSerial = [240,100,100,100,100,100,100,247]
 
-serialPort1 = serial.Serial('COM15', 9600)  # open serial port
-#serialPort2 = serial.Serial('COM8', 9600)  # open serial port
-#print(serialPort.name)         # check which port was really used
+serialPort1 = serial.Serial('COM15', timeout=None, baudrate= 1000000)  # open serial port
+print("Inicializando puerto\n")
+time.sleep(5)
 
 # Define some colors
 BLACK    = (   0,   0,   0)
@@ -114,7 +116,7 @@ while done==False:
         textPrint.Print(screen, "Number of joysticks: {}".format(joystick_count) )
         textPrint.indent()
 
-        dataSerial = [254]
+#ojo        dataSerial = [254]
 
         # For each joystick:
         for i in range(joystick_count):
@@ -160,12 +162,16 @@ while done==False:
 
             Shot=joystick.get_button(1)
 
-            try:
-                dataSerial.append(velLeft)
-                dataSerial.append(velRight)
+            if (i==0):
+                dataSerial[1] = velLeft
+                dataSerial[2] = velRight
 
-            except serial.SerialException:
-                continue
+            # try:
+            #     dataSerial.append(velLeft)
+            #     dataSerial.append(velRight)
+            #
+            # except serial.SerialException:
+            #     continue
 
 
             textPrint.unindent()
@@ -191,28 +197,28 @@ while done==False:
             textPrint.unindent()
             textPrint.unindent()
 
-
-        packet=[]
-        for i in range(len(dataSerial)):
-
-            packet.append(hex(dataSerial[i]))
-
-        print(packet)
-
-        pack = ""
-        for i in packet:
-
-            pack=pack+i
-
-        pack2 = pack.replace('0','\\')
-        print(pack2)
         #
-
-        checksum = 0
-        for el in pack2:
-
-            checksum ^= ord(el)
-        print("checksum: ", hex(checksum))
+        # packet=[]
+        # for i in range(len(dataSerial)):
+        #
+        #     packet.append(hex(dataSerial[i]))
+        #
+        # print(packet)
+        #
+        # pack = ""
+        # for i in packet:
+        #
+        #     pack=pack+i
+        #
+        # pack2 = pack.replace('0','\\')
+        # print(pack2)
+        # #
+        #
+        # checksum = 0
+        # for el in pack2:
+        #
+        #     checksum ^= ord(el)
+        # print("checksum: ", hex(checksum))
 
 
         # checksum=sum(dataSerial)
@@ -221,28 +227,20 @@ while done==False:
 
         # dataSerial.append(checksum)
 
-        dataSerial.append(checksum)
+        #dataSerial.append(checksum)
 
-        NumElements=len(dataSerial)
+        #NumElements=len(dataSerial)
 
-        dfSerial=struct.pack("B"*NumElements, *dataSerial)
+        dfSerial=struct.pack("8B", *dataSerial)
 
         # Limit to 20 frames per second
         clock.tick(20)
 
-        dataSerial = struct.pack('BB', 100, 101)
 
         try:
+            serialPort1.write(dfSerial)
+            print(dfSerial)
 
-            print("dfSerial: ",dfSerial)
-            print("dataSerial: ",dataSerial)
-            #serialPort1.write(dfSerial)
-            serialPort1.write(dataSerial)
-
-            #serialPort2.write(dfSerial)
-
-            #serialPort.flush()
-            #read_val = serialPort.read()
         except serial.SerialException:
             print("errorException")
             continue
