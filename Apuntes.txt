@@ -1,0 +1,8 @@
+I got this error when I set up a local repository first. Then went to github and created a new repository. Then I ran
+
+git remote add origin <repository url>
+When I tried to push/pull, I got the same fatal: unrelated_histories error. Here is how I fixed it:
+git pull origin master --allow-unrelated-histories
+git merge origin origin/master
+... add and commit here...
+git push origin master
