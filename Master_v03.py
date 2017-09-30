@@ -1,3 +1,4 @@
+#20170930_1603: TODO: validar conexion sockets
 #2017/09/27:  Trama de datos 8 bytes
 # Byte[0]: 240 o 0xF0
 # Byte[1]: Robot1 Motor Left
@@ -23,15 +24,21 @@ import socket
 dataSerial = [240,100,100,100,100,100,100,247]
 
 #serialPort1 = serial.Serial('COM15', timeout=None, baudrate= 1000000)  # open serial port
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-# get local machine name
-host = "192.168.1.30" #IP ESP8266
+#SOCKET ROBOT 1
+Robot1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+Robot1.connect(("192.168.1.5",123))
+
+# #SOCKET ROBOT 2
+Robot2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+Robot2.connect(("192.168.1.3",123))
+
+#
+# #SOCKET ROBOT 3
+# Robot3 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+# Robot3.connect(("192.168.1.34",789))
 
 
-port = 123
-# connection to hostname on the port.
-s.connect(("192.168.1.30",123))
 
 print("Inicializando puerto\n")
 time.sleep(5)
@@ -266,7 +273,21 @@ while done==False:
 
         try:
             #serialPort1.write(dfSerial)
-            s.send(dfSerial)
+            #try:
+                #Robot1.connect(("192.168.1.5", 123))
+            Robot1.send(dfSerial)
+            #except:
+                #print("robot 1 no conectado")
+
+            #try:
+                #Robot2.connect(("192.168.1.3", 123))
+            Robot2.send(dfSerial)
+           # except:
+                #print("robot 2 no conectado")
+            #Robot1.send(dfSerial)
+            #Robot2.send(dfSerial)
+            #Robot3.send(dfSerial)
+
             print(dfSerial)
 
             #bytesRecv = s.recv(2)
@@ -295,5 +316,8 @@ while done==False:
 # on exit if running from IDLE.
 #serialPort1.close()
 #serialPort2.close()
-s.close()
+Robot1.close()
+Robot2.close()
+#Robot3.close()
+
 pygame.quit ()
