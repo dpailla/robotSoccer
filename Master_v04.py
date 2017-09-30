@@ -25,6 +25,7 @@ dataSerial = [240,100,100,100,100,100,100,247]
 #serialPort1 = serial.Serial('COM15', timeout=None, baudrate= 1000000)  # open serial port
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
+s2= socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # get local machine name
 host = "192.168.1.30" #IP ESP8266
 
@@ -32,6 +33,7 @@ host = "192.168.1.30" #IP ESP8266
 port = 123
 # connection to hostname on the port.
 s.connect(("192.168.1.30",123))
+s2.connect(("192.168.1.31",124))
 
 print("Inicializando puerto\n")
 time.sleep(5)
@@ -267,6 +269,7 @@ while done==False:
         try:
             #serialPort1.write(dfSerial)
             s.send(dfSerial)
+            s2.send(dfSerial)
             print(dfSerial)
 
             #bytesRecv = s.recv(2)
@@ -296,4 +299,5 @@ while done==False:
 #serialPort1.close()
 #serialPort2.close()
 s.close()
+s2.close()
 pygame.quit ()
