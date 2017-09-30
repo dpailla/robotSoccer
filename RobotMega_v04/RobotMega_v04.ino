@@ -47,7 +47,7 @@ void setup(){
 void loop(){
   while (Serial3.available()) {  
      int iByte = Serial3.read();
-    Serial.println(iByte);
+    //Serial.println(iByte);
      
      //Serial.println(iByte);
      if (iByte == 240){
