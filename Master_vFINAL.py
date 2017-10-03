@@ -29,22 +29,30 @@ Robot3 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 #CONEXION ROBOTS
 #ROBOT 1
 #try:
-Robot1.connect(("192.168.1.10",123))
+Robot1.connect(("192.168.1.5",123))
 # except socket.error:
 #     pass
+print("Robot1 Conectado")
+time.sleep(1)
 
 # try:
-Robot2.connect(("192.168.1.5",123))
+Robot2.connect(("192.168.1.6",123))
 # except socket.error:
 #     pass
 #
+print("Robot2 Conectado")
+
+time.sleep(1)
+
 # try:
-#     Robot3.connect(("192.168.1.10",123))
+Robot3.connect(("192.168.1.4",123))
+print("Robot3 Conectado")
+
 # except socket.error:
 #     pass
 
-time.sleep(5)
-
+time.sleep(2)
+print("listos!")
 # Define some colors
 BLACK    = (   0,   0,   0)
 WHITE    = ( 255, 255, 255)

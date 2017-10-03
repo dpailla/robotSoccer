@@ -38,8 +38,15 @@ void setup(){
   Dynamixel.setEndless(MOTOR_LEFT,ON);
   Dynamixel.setEndless(MOTOR_RIGHT,ON);
 
-  //parpadearLed(10);
-  //parpadearMotores(10);
+  Dynamixel.turn(1,LEFT,500);
+  Dynamixel.turn(2,LEFT,500);
+  delay(500);
+  //Gira contra manecillas de reloj
+  Dynamixel.turn(1,RIGTH,500);
+  Dynamixel.turn(2,RIGTH,500);
+  delay(500);
+  Dynamixel.turn(1,LEFT,0);
+  Dynamixel.turn(2,LEFT,0);
   
   
 }
