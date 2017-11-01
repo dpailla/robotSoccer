@@ -5,7 +5,7 @@ def do_connect(): #POSIBLEMENTE SEA PARA CONECTARNOS EN LA RED WIFI
     if not sta_if.isconnected():
         print('connecting to network...')
         sta_if.active(True)
-        sta_if.connect('CIDIS', 'labCid1$')
+        sta_if.connect(LOGIN, PWD) #INGRESE LOGIN Y PASSWORD
         while not sta_if.isconnected():
             pass
     print('network config:', sta_if.ifconfig())
