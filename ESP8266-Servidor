@@ -12,8 +12,8 @@
 
 
 //Configuración de red
-const char* ssid     = "CIDIS";
-const char* password = "labCid1$";
+const char* ssid     = "";
+const char* password = "";
 
 WiFiServer TCPServer(8266//¿PORT?); //Servidor del ESP32
 WiFiClient TCPClient; //Cliente TCP (PC)
