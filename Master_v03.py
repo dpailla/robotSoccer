@@ -27,11 +27,11 @@ dataSerial = [240,100,100,100,100,100,100,247]
 
 #SOCKET ROBOT 1
 Robot1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-Robot1.connect(("192.168.1.5",123))
+Robot1.connect(("192.168.1.6",123))
 
 # #SOCKET ROBOT 2
 Robot2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-Robot2.connect(("192.168.1.3",123))
+Robot2.connect(("192.168.1.6",123))
 
 #
 # #SOCKET ROBOT 3

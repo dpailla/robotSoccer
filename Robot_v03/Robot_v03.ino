@@ -85,8 +85,8 @@ void ValProcces(int data[]){
   }
   velLeft = abs(velLeft);
   velRight = abs(velRight);
-  Dynamixel.turn(MOTOR_LEFT, LEFT, velLeft); 
-  Dynamixel.turn(MOTOR_RIGHT, RIGTH , velRight); 
+  Dynamixel.turn(MOTOR_LEFT, dirLeft, velLeft); 
+  Dynamixel.turn(MOTOR_RIGHT, dirRight , velRight); 
    
 }
 
