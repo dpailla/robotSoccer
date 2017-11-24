@@ -12,7 +12,7 @@ def do_connect():
     if not sta_if.isconnected():
         print('connecting to network...')
         sta_if.active(True)
-        sta_if.connect('CIDIS', 'labCid1$')
+        sta_if.connect('LOGIN', 'PASSW')
         while not sta_if.isconnected():
             pass
     tupla_datos=sta_if.ifconfig()
